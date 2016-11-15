@@ -8,7 +8,12 @@ angular.module('mychat.services', [])
 
 .factory('FetchDatas', ['$firebaseArray', function($firebaseArray){
   console.log("$firebaseArray ", firebase);
-  return $firebaseArray(firebase.database().ref('message'));
+  return $firebaseArray(firebase.database().ref().child('message'));
+}])
+
+.factory('FetchRooms', ['$firebaseArray', function($firebaseArray){
+    console.log("$firebaseArray ", firebase);
+    return $firebaseArray(firebase.database().ref('rooms'));
 }])
 
 .factory('Chats', function() {

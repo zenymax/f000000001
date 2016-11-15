@@ -85,7 +85,7 @@ angular.module('mychat.controllers', [])
   // })
 })
 
-.controller('ChatCtrl', function($scope, FetchDatas) {
+.controller('ChatCtrl', function($scope, FetchDatas, $firebaseArray) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -96,8 +96,20 @@ angular.module('mychat.controllers', [])
 
   console.log("ChatCtrl initialized ", FetchDatas);
 
+    var ref = firebase.database().ref().child('message')
+    var test = $firebaseArray(ref)
+
+    var query = ref.orderByChild("timestamp").limitToLast(25);
+    // the $firebaseArray service properly handles database queries as well
+    var top = $firebaseArray(query);
+
+    console.log('test ', test.$ref('message'))
+    console.log('top ', top)
 
 
+  for (var i=0; i< FetchDatas.length; i++) {
+      console.log('fff ', FetchDatas[i])
+  }
 
   // $scope.chats = Chats.all();
 
@@ -106,8 +118,8 @@ angular.module('mychat.controllers', [])
   // };
 })
 
-.controller('RoomCtrl', function($scope) {
-  console.log("RoomCtrl initialized");
+.controller('RoomCtrl', function($scope, FetchRooms) {
+  console.log("RoomCtrl initialized ", FetchRooms);
 
   // $scope.rooms = Rooms.all()
 })
